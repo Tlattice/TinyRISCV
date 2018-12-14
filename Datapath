@@ -1,0 +1,69 @@
+#! /usr/bin/vvp
+:ivl_version "0.9.7 " "(v0_9_7)";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x197d8b0 .scope module, "Datapath" "Datapath" 2 24;
+ .timescale 0 0;
+v0x19b0cc0_0 .net "MUX1", 31 0, L_0x19b2050; 1 drivers
+v0x19b0d80_0 .var "PC", 31 0;
+v0x19b0e20_0 .net "PC4", 0 0, L_0x19b1c40; 1 drivers
+v0x19b0ec0_0 .net "PC4D", 31 0, L_0x19b27f0; 1 drivers
+v0x19b0f70_0 .net "PC_D", 31 0, L_0x19b2660; 1 drivers
+v0x19b1010_0 .net "RD_IM_D", 31 0, L_0x19b2700; 1 drivers
+v0x19b10f0_0 .net *"_s0", 31 0, C4<00000000000000000000000000000100>; 1 drivers
+v0x19b1190_0 .net *"_s11", 30 0, C4<0000000000000000000000000000000>; 1 drivers
+v0x19b1280_0 .net *"_s12", 31 0, C4<00000000000000000000000000000000>; 1 drivers
+v0x19b1320_0 .net *"_s17", 4 0, L_0x19b2210; 1 drivers
+v0x19b1420_0 .net *"_s18", 37 0, L_0x19b2340; 1 drivers
+v0x19b14c0_0 .net *"_s2", 31 0, L_0x19b1b10; 1 drivers
+v0x19b15d0_0 .net *"_s23", 57 0, C4<0000000000000000000000000000000000000000000000000000000000>; 1 drivers
+v0x19b1670_0 .net *"_s7", 0 0, L_0x19b1d30; 1 drivers
+v0x19b1790_0 .net *"_s8", 31 0, L_0x19b1dd0; 1 drivers
+v0x19b1830_0 .net "clk", 0 0, C4<z>; 0 drivers
+v0x19b16f0_0 .net "in_bus", 61 0, C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>; 0 drivers
+v0x19b1940_0 .var "out_bus", 95 0;
+v0x19b1a60_0 .net "reset", 0 0, C4<z>; 0 drivers
+E_0x197de00 .event posedge, v0x19a06d0_0;
+L_0x19b1b10 .arith/sum 32, v0x19b0d80_0, C4<00000000000000000000000000000100>;
+L_0x19b1c40 .part L_0x19b1b10, 0, 1;
+L_0x19b1d30 .part C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>, 1, 1;
+L_0x19b1dd0 .concat [ 1 31 0 0], L_0x19b1c40, C4<0000000000000000000000000000000>;
+L_0x19b2050 .functor MUXZ 32, C4<00000000000000000000000000000000>, L_0x19b1dd0, L_0x19b1d30, C4<>;
+L_0x19b2210 .part C4<zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz>, 9, 5;
+L_0x19b2340 .concat [ 1 5 32 0], L_0x19b1c40, L_0x19b2210, v0x19b0d80_0;
+L_0x19b2480 .concat [ 38 58 0 0], L_0x19b2340, C4<0000000000000000000000000000000000000000000000000000000000>;
+L_0x19b2660 .part v0x19b0c20_0, 64, 32;
+L_0x19b2700 .part v0x19b0c20_0, 32, 32;
+L_0x19b27f0 .part v0x19b0c20_0, 0, 32;
+S_0x197cb40 .scope module, "IFDEC" "PIPE" 2 44, 3 1, S_0x197d8b0;
+ .timescale 0 0;
+P_0x197d168 .param/l "L" 3 2, +C4<01100000>;
+v0x19a06d0_0 .alias "clk", 0 0, v0x19b1830_0;
+v0x19b0b80_0 .net "in", 95 0, L_0x19b2480; 1 drivers
+v0x19b0c20_0 .var "out", 95 0;
+E_0x1968420 .event negedge, v0x19a06d0_0;
+    .scope S_0x197cb40;
+T_0 ;
+    %wait E_0x1968420;
+    %load/v 8, v0x19b0b80_0, 96;
+    %set/v v0x19b0c20_0, 8, 96;
+    %jmp T_0;
+    .thread T_0;
+    .scope S_0x197d8b0;
+T_1 ;
+    %wait E_0x197de00;
+    %load/v 8, v0x19b0cc0_0, 32;
+    %set/v v0x19b0d80_0, 8, 32;
+    %load/v 8, v0x19b0d80_0, 32;
+    %ix/load 0, 0, 0;
+    %set/x0 v0x19b1940_0, 8, 32;
+    %jmp T_1;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "Datapath.v";
+    "PIPE.v";
